@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>UAE Sustainability Map</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+  <style>
+    body { font-family: Arial, sans-serif; margin:0; padding:0; background:#f8f9fa; }
+    header { background:#007b5f; color:#fff; padding:18px; text-align:center; }
+    #map { height: 65vh; min-height:400px; }
+    .content { max-width:900px; margin:auto; padding:18px; }
+    .card { background:#fff; padding:16px; border-radius:10px; box-shadow:0 2px 8px rgba(0,0,0,0.1); margin-bottom:20px; }
+    .popup-img { width:100%; border-radius:8px; margin-top:6px; }
+    footer { text-align:center; padding:12px; color:#444; font-size:0.9rem; }
+    a { color:#007b5f; text-decoration:none; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>UAE Eco-Conscious Architecture Map</h1>
+    <p>Interactive view of key sustainable projects in the UAE</p>
+  </header>
+
+  <div id="map"></div>
+
+  <div class="content">
+    <div class="card">
+      <h2>About</h2>
+      <p>
+        This interactive map highlights major sustainable developments in the UAE —
+        <strong>Masdar City</strong>, <strong>The Sustainable City (Dubai)</strong>, and <strong>Al Bahar Towers</strong>.
+        These projects demonstrate innovative approaches to energy efficiency, low-carbon design, and climate adaptation.
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>Estidama Vision</h3>
+      <p>
+        Estidama (meaning “sustainability” in Arabic) is Abu Dhabi’s framework for sustainable design and operation.
+        It ensures that new communities and buildings support a greener, resource-efficient UAE future.
+      </p>
+      <ul>
+        <li>50% clean energy target by 2050</li>
+        <li>20% carbon reduction in building sector by 2030</li>
+        <li>All new buildings to meet Pearl Rating standards</li>
+      </ul>
+    </div>
+  </div>
+
+  <footer>
+    <p>Map powered by Leaflet & OpenStreetMap — Designed by Khaleel © 2025</p>
+  </footer>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script>
+    const map = L.map('map').setView([24.8, 54.8], 7);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    const places = [
+      {
+        name: "Masdar City (Abu Dhabi)",
+        coords: [24.43208, 54.61582],
+        desc: "A pioneering low-carbon city integrating renewable energy and smart design.",
+        img: "https://upload.wikimedia.org/wikipedia/commons/8/84/Masdar_City_2012.jpg",
+        link: "https://en.wikipedia.org/wiki/Masdar_City"
+      },
+      {
+        name: "The Sustainable City (Dubai)",
+        coords: [25.031831, 55.282686],
+        desc: "A residential community promoting energy efficiency and eco-friendly living.",
+        img: "https://upload.wikimedia.org/wikipedia/commons/9/9f/Sustainable_City_Dubai.jpg",
+        link: "https://www.thesustainablecity.ae/"
+      },
+      {
+        name: "Al Bahar Towers (Abu Dhabi)",
+        coords: [24.45612, 54.40099],
+        desc: "Iconic twin towers featuring a dynamic mashrabiya shading system reducing solar gain by 50%.",
+        img: "https://upload.wikimedia.org/wikipedia/commons/6/6c/Al_Bahar_Towers_Abu_Dhabi.jpg",
+        link: "https://en.wikipedia.org/wiki/Al_Bahr_Towers"
+      }
+    ];
+
+    places.forEach(p => {
+      const marker = L.marker(p.coords).addTo(map);
+      const popup = `
+        <div style="min-width:200px">
+          <strong>${p.name}</strong>
+          <p>${p.desc}</p>
+          <img class="popup-img" src="${p.img}" alt="${p.name}">
+          <p><a href="${p.link}" target="_blank">Learn more →</a></p>
+        </div>`;
+      marker.bindPopup(popup);
+    });
+  </script>
+</body>
+</html>
